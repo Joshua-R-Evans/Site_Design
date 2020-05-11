@@ -1,0 +1,49 @@
+body{
+	background-color: white;
+}
+
+h1{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+
+ul.Navbar {
+  list-style-type: none;
+  padding: 0;
+  overflow: none;
+  background-color: rgba(150, 150, 150, .5);
+  position: fixed;
+  margin-left: 38%;
+  bottom: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Change the button color on hover */
+li a:hover {
+  background-color: #101010;
+  color: white;
+}
+img.subject {
+  float: left;
+  margin: 5px;
+}
+img.author {  
+  float: bottom;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

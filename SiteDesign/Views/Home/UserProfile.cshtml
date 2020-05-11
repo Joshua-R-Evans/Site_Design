@@ -1,0 +1,53 @@
+﻿@using SiteDesign.Models;
+@model SiteDesign.Models.SiteUser
+
+@{
+    ViewBag.Title = "UserProfile";
+    string AvatarPath = SiteUser.UploadLocation + "/";
+    if (AvatarPath.StartsWith("~"))
+    {
+        AvatarPath = AvatarPath.Substring(1);
+    }
+    if (!string.IsNullOrEmpty(Model.Avatar)){
+        AvatarPath += Model.Avatar;
+    }
+    else
+    {
+        AvatarPath += "Default.jpg";
+    }
+}
+    
+    
+z        <div class="Avatar-Container whiteback">
+            <div class="Pic">                
+                <img src="@AvatarPath" class="Profile-Thumbnail" alt="Your Image Here" width="150">
+            </div>
+            <dl>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Handle):
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Handle)
+                </dd>
+
+                <dt>
+                    Years Coding:
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Experience)
+                </dd>
+            </dl>                  
+            <div>
+                <ul>
+                    <li>@Html.ActionLink("Get a Template", "Index", "Templates", null, null)</li>
+                    <li class="profile-item">@Html.ActionLink("Submit a Template", "Create", "Templates", null, null)</li>
+                </ul>
+            </div>    
+        </div>
+        <div class="Profile-Templates">
+            @Html.Action("indexFiltered", "Templates", new { id = Model.UserId})
+        </div>
+

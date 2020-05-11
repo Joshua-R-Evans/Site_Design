@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Site_DesignDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TemplateId" Type="int" Nullable="false" />
+          <Property Name="Stars" Type="int" />
+          <Property Name="Comments" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="SiteUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Handle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Experience" Type="float" Nullable="false" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="Templates">
+          <Key>
+            <PropertyRef Name="TemplateId" />
+          </Key>
+          <Property Name="TemplateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FolderName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="HtmlFile" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="CssFile" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Ratings__Templat__3E52440B">
+          <End Role="Templates" Type="Self.Templates" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Templates">
+              <PropertyRef Name="TemplateId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="TemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__UserId__3D5E1FD2">
+          <End Role="SiteUsers" Type="Self.SiteUsers" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Templates__UserI__3A81B327">
+          <End Role="SiteUsers" Type="Self.SiteUsers" Multiplicity="1" />
+          <End Role="Templates" Type="Self.Templates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Templates">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Site_DesignDBModelStoreContainer">
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteUsers" EntityType="Self.SiteUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Templates" EntityType="Self.Templates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Ratings__Templat__3E52440B" Association="Self.FK__Ratings__Templat__3E52440B">
+            <End Role="Templates" EntitySet="Templates" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__UserId__3D5E1FD2" Association="Self.FK__Ratings__UserId__3D5E1FD2">
+            <End Role="SiteUsers" EntitySet="SiteUsers" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Templates__UserI__3A81B327" Association="Self.FK__Templates__UserI__3A81B327">
+            <End Role="SiteUsers" EntitySet="SiteUsers" />
+            <End Role="Templates" EntitySet="Templates" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Site_DesignDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TemplateId" Type="Int32" Nullable="false" />
+          <Property Name="Stars" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Template" Relationship="Site_DesignDBModel.FK__Ratings__Templat__3E52440B" FromRole="Rating" ToRole="Template" />
+          <NavigationProperty Name="SiteUser" Relationship="Site_DesignDBModel.FK__Ratings__UserId__3D5E1FD2" FromRole="Rating" ToRole="SiteUser" />
+        </EntityType>
+        <EntityContainer Name="Site_DesignDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Templates" EntityType="Site_DesignDBModel.Template" />
+          <AssociationSet Name="FK__Ratings__Templat__3E52440B" Association="Site_DesignDBModel.FK__Ratings__Templat__3E52440B">
+            <End Role="Template" EntitySet="Templates" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <EntitySet Name="SiteUsers" EntityType="Site_DesignDBModel.SiteUser" />
+          <AssociationSet Name="FK__Ratings__UserId__3D5E1FD2" Association="Site_DesignDBModel.FK__Ratings__UserId__3D5E1FD2">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Templates__UserI__3A81B327" Association="Site_DesignDBModel.FK__Templates__UserI__3A81B327">
+            <End Role="SiteUser" EntitySet="SiteUsers" />
+            <End Role="Template" EntitySet="Templates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="TemplateId" />
+          </Key>
+          <Property Name="TemplateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="HtmlFile" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="CssFile" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ratings" Relationship="Site_DesignDBModel.FK__Ratings__Templat__3E52440B" FromRole="Template" ToRole="Rating" />
+          <NavigationProperty Name="SiteUser" Relationship="Site_DesignDBModel.FK__Templates__UserI__3A81B327" FromRole="Template" ToRole="SiteUser" />
+        </EntityType>
+        <Association Name="FK__Ratings__Templat__3E52440B">
+          <End Type="Site_DesignDBModel.Template" Role="Template" Multiplicity="1" />
+          <End Type="Site_DesignDBModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="TemplateId" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="TemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SiteUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Handle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Experience" Type="Double" Nullable="false" />
+          <Property Name="Avatar" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ratings" Relationship="Site_DesignDBModel.FK__Ratings__UserId__3D5E1FD2" FromRole="SiteUser" ToRole="Rating" />
+          <NavigationProperty Name="Templates" Relationship="Site_DesignDBModel.FK__Templates__UserI__3A81B327" FromRole="SiteUser" ToRole="Template" />
+        </EntityType>
+        <Association Name="FK__Ratings__UserId__3D5E1FD2">
+          <End Type="Site_DesignDBModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="Site_DesignDBModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Templates__UserI__3A81B327">
+          <End Type="Site_DesignDBModel.SiteUser" Role="SiteUser" Multiplicity="1" />
+          <End Type="Site_DesignDBModel.Template" Role="Template" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SiteUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Template">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Site_DesignDBModelStoreContainer" CdmEntityContainer="Site_DesignDBEntities">
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="Site_DesignDBModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="RatingId" ColumnName="RatingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+                <ScalarProperty Name="Stars" ColumnName="Stars" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Templates">
+            <EntityTypeMapping TypeName="Site_DesignDBModel.Template">
+              <MappingFragment StoreEntitySet="Templates">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CssFile" ColumnName="CssFile" />
+                <ScalarProperty Name="HtmlFile" ColumnName="HtmlFile" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteUsers">
+            <EntityTypeMapping TypeName="Site_DesignDBModel.SiteUser">
+              <MappingFragment StoreEntitySet="SiteUsers">
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

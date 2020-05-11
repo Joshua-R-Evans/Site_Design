@@ -1,0 +1,29 @@
+body{
+	background-color: black;
+  color: white;
+}
+div{
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+h1{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+.Button{
+  margin: 0;
+  height: 700px;
+  width: 200px;
+
+}
+#Left{
+  float: left;
+}
+#Rite{
+  float: right;
+}

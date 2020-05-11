@@ -1,0 +1,50 @@
+﻿@model SiteDesign.Models.Rating
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rating</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Stars)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Stars)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Template.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Template.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiteUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiteUser.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RatingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

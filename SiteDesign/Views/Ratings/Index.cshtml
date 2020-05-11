@@ -1,0 +1,71 @@
+﻿@using SiteDesign.Models;
+@using Microsoft.AspNet.Identity;
+@model IEnumerable<SiteDesign.Models.Rating>
+@{
+    ViewBag.Title = "Index";
+    string baseAvatarPath = SiteUser.UploadLocation + "/";
+    if (baseAvatarPath.StartsWith("~"))
+    {
+        baseAvatarPath = baseAvatarPath.Substring(1);
+    }
+    
+    var userId = User.Identity.GetUserId();
+
+}
+
+<h2>Ratings</h2>
+
+@if (!((Template)ViewBag.Template).Ratings.Any(r => r.UserId == userId)) 
+{
+    <p>   
+    @Html.ActionLink("Rate " + (string)ViewBag.Template.FolderName, "Create", "Ratings", new { id = ViewBag.Template.TemplateId }, null)
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            User
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stars)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    string AvatarPath;
+    if (!string.IsNullOrEmpty(item.SiteUser.Avatar))
+    {
+        AvatarPath = baseAvatarPath + item.SiteUser.Avatar;
+    }
+    else
+    {
+        AvatarPath = baseAvatarPath + "Default.jpg";
+    }
+    <tr>
+        <td>
+            <img src="@AvatarPath" alt="Your Image Here" width="100">
+            @Html.ActionLink(item.SiteUser.Handle, "UserProfile", "Home", new { id = item.UserId}, null)
+        </td>
+        <td>
+            @for (int i = 1; i <= 5; i++)
+            {
+                var ratingClass = "fa fa-star";
+                if (i <= item.Stars)
+                {
+                    ratingClass += " highlighted";
+                }
+                <span class="@ratingClass"></span>
+
+            }@Html.DisplayFor(modelItem => item.Stars)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        
+    </tr>
+}
+</table>

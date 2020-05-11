@@ -1,0 +1,28 @@
+﻿@using SiteDesign.Models;
+@model IEnumerable<SiteDesign.Models.Template>
+@{
+    var baseUploadLocation = Template.UploadLocation + "/";
+    if (baseUploadLocation.StartsWith("~"))
+    {
+
+        baseUploadLocation = baseUploadLocation.Substring(1);
+
+    }
+    
+    ViewBag.Title = "Templates";
+}
+<div class="title" id="whiteback">
+    <h1>@(ViewBag.headerText)Templates</h1>
+</div>
+<div class="flex-container">
+    @foreach(var item in Model)
+    {
+        var uploadLocation = baseUploadLocation + item.FolderName + "/"; 
+        <div style="cursor: pointer;" class="main-button img-preview whiteback" onclick="location.href='@Url.Action("Details","Templates", new { id = item.TemplateId})'">
+        <div>@item.FolderName</div>
+        <div style="background-image: url('@(uploadLocation + item.Image)'); cursor: pointer;"></div>
+    </div>
+    }
+    
+</div>
+

@@ -1,0 +1,63 @@
+﻿@model SiteDesign.Models.Template
+
+@{
+    ViewBag.Title = "Create";
+}
+
+    <div class="title whiteback">
+        @using (Html.BeginForm("Create", "Templates", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.CssFile)
+        <div class="form-horizontal">
+            <h4>Upload a New Template</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-2" for="htmlUpload">Upload HTML</label>
+                <div class="col-md-10">
+                    <input type="file" name="htmlUpload" class="form-control" id="htmlUpload" />
+                    @Html.ValidationMessageFor(model => model.HtmlFile, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="cssUpload">Upload CSS</label>
+                <div class="col-md-10">
+                    <input type="file" name="cssUpload" class="form-control" id="cssUpload" />
+                    @Html.ValidationMessageFor(model => model.CssFile, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="imgUpload">Upload Image</label>
+                <div class="col-md-10">
+                    <input type="file" name="imgUpload" class="form-control" id="imgUpload" />
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FolderName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FolderName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FolderName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

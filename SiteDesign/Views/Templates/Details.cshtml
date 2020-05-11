@@ -1,0 +1,56 @@
+﻿@using SiteDesign.Models;
+@using Microsoft.AspNet.Identity;
+@model SiteDesign.Models.Template
+@{
+    var baseUploadLocation = Template.UploadLocation + "/";
+    if (baseUploadLocation.StartsWith("~")){
+
+        baseUploadLocation = baseUploadLocation.Substring(1);
+
+    }
+    var uploadLocation = baseUploadLocation + Model.FolderName + "/";
+
+    ViewBag.Title = "SideBySide";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = User.Identity.GetUserId();
+}
+
+<div class="flex-res-container">
+    <div class="long-res-container" id="whiteback"><h4>Html Preview</h4><pre><code class="language-html">@ViewBag.Html_res</code></pre></div>
+    <div class="long-res-container">
+        <div class="res-container" id="whiteback"><h4>Website Preview</h4>
+            <img class="PreviewImg" src="@(uploadLocation + Model.Image)"/>
+        </div>
+        <div class="res-container" id="whiteback">
+            <h4>Index</h4>
+            <img class="index-pic" src="~/Content/Static/index.png" alt="An error occurred, please reload page."/>
+            <div class="sideNav">
+                <ul>
+                    <li>@Html.ActionLink("Download HTML", "DownloadFile", "Templates", new { folderName = Model.FolderName, fileName = Model.HtmlFile }, null)</li>
+                    <li>@Html.ActionLink("Download CSS", "DownloadFile", "Templates", new { folderName = Model.FolderName, fileName = Model.CssFile }, null)</li>
+                    <li>@Html.ActionLink("Download File", "DownloadFile", "Templates", new { fileName = Model.FolderName + ".zip" }, null)</li>
+                    <li>@Html.ActionLink("Return to Templates", "Templates", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="title whiteback">
+        <ul>
+            <li>@Html.ActionLink("More from " + Model.SiteUser.Handle, "UserProfile", "Home", new { id = Model.UserId }, null)</li>
+            <li class="push-right">
+                Current Rating:
+                @for (int i = 1; i <= 5; i++)
+                {
+                    var ratingClass = "fa fa-star";
+                    if (i <= Model.averageRating + 0.5)
+                    {
+                        ratingClass += " highlighted";
+                    }
+                    <span class="@ratingClass"></span>
+                }
+            </li>
+        </ul>
+        @Html.Action("Index", "Ratings", new { id = Model.TemplateId })
+    </div>
+</div>
+
